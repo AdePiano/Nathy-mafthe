@@ -1,0 +1,22 @@
+<%- include('partials/header', { pageTitle: t('how_to_pay_title') }) %>
+
+<section class="section">
+  <h2 class="section-title"><%= t('how_to_pay_title') %></h2>
+
+  <div class="pay-card">
+    <h3>🏦 <%= t('how_to_pay_cbe') %></h3>
+    <div class="info-row"><span><%= t('account_name') %></span><span><%= CBE_ACCOUNT_NAME %></span></div>
+    <div class="info-row"><span><%= t('account_number') %></span><span><%= CBE_ACCOUNT_NUMBER %></span></div>
+  </div>
+
+  <div class="pay-card">
+    <h3>📱 <%= t('how_to_pay_telebirr') %></h3>
+    <div class="info-row"><span><%= t('telebirr_number') %></span><span><%= TELEBIRR_NUMBER %></span></div>
+  </div>
+
+  <div class="alert" style="background:#eaf2f8; color:#232f3e; border:1px solid #c8dbe8;">
+    <%= t('how_to_pay_instructions') %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

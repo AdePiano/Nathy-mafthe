@@ -1,0 +1,53 @@
+<%- include('../partials/admin-header', { pageTitle: t('dashboard'), active: 'dashboard' }) %>
+
+<h1 class="section-title"><%= t('dashboard') %></h1>
+
+<div class="stat-grid">
+  <div class="stat-card">
+    <div class="stat-number"><%= totalListings %></div>
+    <div class="stat-label"><%= t('total_listings') %></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number"><%= totalBookings %></div>
+    <div class="stat-label"><%= t('total_bookings') %></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number"><%= pendingBookings %></div>
+    <div class="stat-label"><%= t('pending_bookings') %></div>
+  </div>
+</div>
+
+<div style="display:flex; gap:10px; margin-bottom:24px; flex-wrap:wrap;">
+  <a href="/admin/listings/new" class="btn btn-primary">➕ <%= t('add_new_listing') %></a>
+  <a href="/admin/listings" class="btn btn-secondary">🗂️ <%= t('manage_listings') %></a>
+  <a href="/admin/bookings" class="btn btn-outline">📥 <%= t('manage_bookings') %></a>
+</div>
+
+<h2 class="section-title" style="font-size:1.05rem;"><%= t('manage_bookings') %></h2>
+<div class="table-wrap">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th><%= t('listing') %></th>
+        <th><%= t('customer_name') %></th>
+        <th><%= t('customer_phone') %></th>
+        <th><%= t('booking_status') %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (recentBookings.length === 0) { %>
+        <tr><td colspan="4" class="empty-state">—</td></tr>
+      <% } %>
+      <% recentBookings.forEach(function(b) { %>
+        <tr>
+          <td><%= b.listingTitleEn || b.listingTitleAm %></td>
+          <td><%= b.customerName %></td>
+          <td><%= b.customerPhone %></td>
+          <td><span class="status-pill status-<%= b.status %>"><%= t('status_' + b.status) %></span></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('../partials/admin-footer') %>

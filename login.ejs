@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="<%= lang %>">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= t('admin_login') %> - <%= t('site_name') %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body style="background:var(--navy-dark); min-height:100vh; display:flex; align-items:center; justify-content:center;">
+  <div class="tricolor-strip" style="position:fixed; top:0; left:0;"></div>
+  <div class="form-card" style="width:100%; max-width:380px;">
+    <div style="text-align:center; margin-bottom:16px;">
+      <span class="brand-mark" style="background:var(--orange); display:inline-flex;">መ</span>
+      <h2 style="margin:10px 0 0; color:var(--navy-dark);"><%= t('site_name') %></h2>
+      <p style="color:var(--text-muted); font-size:0.85rem;"><%= t('admin_login') %></p>
+    </div>
+
+    <% if (error) { %>
+      <div class="alert alert-error"><%= t('invalid_credentials') %></div>
+    <% } %>
+
+    <form method="post" action="/admin/login">
+      <div class="form-group">
+        <label><%= t('username') %></label>
+        <input type="text" name="username" required autofocus>
+      </div>
+      <div class="form-group">
+        <label><%= t('password') %></label>
+        <input type="password" name="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block"><%= t('login') %></button>
+    </form>
+  </div>
+</body>
+</html>

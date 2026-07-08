@@ -1,0 +1,12 @@
+<%- include('partials/header', { pageTitle: t('contact_us') }) %>
+
+<section class="section">
+  <div class="form-card">
+    <h2 class="section-title"><%= t('contact_us') %></h2>
+    <div class="info-row"><span><%= t('phone') %></span><span><a href="tel:<%= CONTACT_PHONE %>"><%= CONTACT_PHONE %></a></span></div>
+    <div class="info-row"><span><%= t('location') %></span><span>Hossana, Hadiya Zone, Central Ethiopia</span></div>
+    <a href="tel:<%= CONTACT_PHONE %>" class="btn btn-primary btn-block" style="margin-top:16px;">📞 <%= t('call_now') %></a>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

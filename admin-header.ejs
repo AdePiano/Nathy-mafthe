@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="<%= lang %>">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof pageTitle !== 'undefined' ? pageTitle + ' | ' : '' %>Admin - <%= t('site_name') %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="tricolor-strip"></div>
+  <div class="admin-shell">
+    <aside class="admin-sidebar">
+      <a href="/admin/dashboard" class="<%= active === 'dashboard' ? 'active' : '' %>">📊 <%= t('dashboard') %></a>
+      <a href="/admin/listings" class="<%= active === 'listings' ? 'active' : '' %>">🗂️ <%= t('manage_listings') %></a>
+      <a href="/admin/listings/new" class="<%= active === 'new-listing' ? 'active' : '' %>">➕ <%= t('add_new_listing') %></a>
+      <a href="/admin/bookings" class="<%= active === 'bookings' ? 'active' : '' %>">📥 <%= t('manage_bookings') %></a>
+      <a href="/" target="_blank">🌐 View Site</a>
+      <form action="/admin/logout" method="post" style="margin-top:8px;">
+        <button type="submit" style="background:none;border:none;color:#d4dade;padding:10px 20px;font-size:0.9rem;cursor:pointer;width:100%;text-align:left;font-family:inherit;">🚪 <%= t('logout') %></button>
+      </form>
+    </aside>
+    <main class="admin-main">

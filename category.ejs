@@ -1,0 +1,53 @@
+<%- include('partials/header', { pageTitle: lang === 'am' ? category.name.am : category.name.en }) %>
+
+<section class="section">
+  <h2 class="section-title"><%= category.icon %> <%= lang === 'am' ? category.name.am : category.name.en %></h2>
+
+  <form class="filter-bar" method="get">
+    <input type="text" name="q" value="<%= q %>" placeholder="<%= t('search_placeholder') %>">
+    <% if (category.hasLocation) { %>
+      <select name="location">
+        <option value=""><%= t('select_location') %></option>
+        <% HOSSANA_AREAS.forEach(function(area) { %>
+          <option value="<%= area %>" <%= selectedLocation === area ? 'selected' : '' %>><%= area %></option>
+        <% }) %>
+      </select>
+    <% } %>
+    <button type="submit" class="btn btn-secondary btn-sm"><%= t('search_button') %></button>
+  </form>
+
+  <% if (listings.length === 0) { %>
+    <div class="empty-state"><%= t('no_listings') %></div>
+  <% } else { %>
+    <div class="listing-grid">
+      <% listings.forEach(function(listing) { %>
+        <a class="listing-card" href="/listing/<%= listing.id %>">
+          <div class="listing-thumb">
+            <% if (listing.images && listing.images.length > 0) { %>
+              <img src="<%= listing.images[0] %>" alt="<%= listing.title_en %>">
+            <% } %>
+            <span class="badge badge-<%= listing.status %>"><%= t('status_' + listing.status) %></span>
+          </div>
+          <div class="listing-body">
+            <div class="listing-title"><%= lang === 'am' ? listing.title_am : listing.title_en %></div>
+            <% if (listing.location) { %>
+              <div class="listing-meta">📍 <%= listing.location %>
+                <% if (listing.areaSize) { %> · <%= listing.areaSize %> <%= listing.areaUnit === 'km2' ? 'km²' : 'm²' %><% } %>
+              </div>
+            <% } %>
+            <div class="listing-price">
+              <% if (listing.price) { %>
+                <%= Number(listing.price).toLocaleString() %> ETB
+                <% if (category.type === 'rent') { %><small><%= t('per_day') %></small><% } %>
+              <% } else { %>
+                <small><%= t('negotiable') %></small>
+              <% } %>
+            </div>
+          </div>
+        </a>
+      <% }) %>
+    </div>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,60 @@
+<%- include('../partials/admin-header', { pageTitle: t('manage_listings'), active: 'listings' }) %>
+
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
+  <h1 class="section-title" style="margin:0;"><%= t('manage_listings') %></h1>
+  <a href="/admin/listings/new" class="btn btn-primary btn-sm">➕ <%= t('add_new_listing') %></a>
+</div>
+
+<div class="table-wrap">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th><%= t('images') %></th>
+        <th><%= t('title_en') %></th>
+        <th><%= t('category') %></th>
+        <th><%= t('location') %></th>
+        <th><%= t('price') %></th>
+        <th><%= t('booking_status') %></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (listings.length === 0) { %>
+        <tr><td colspan="7" class="empty-state"><%= t('no_listings') %></td></tr>
+      <% } %>
+      <% listings.forEach(function(listing) {
+           const cat = getCategory(listing.category);
+      %>
+        <tr>
+          <td>
+            <div class="thumb-row">
+              <% (listing.images || []).slice(0,2).forEach(function(img) { %>
+                <img src="<%= img %>">
+              <% }) %>
+            </div>
+          </td>
+          <td><%= listing.title_en || listing.title_am %></td>
+          <td><%= cat ? cat.icon + ' ' + cat.name.en : listing.category %></td>
+          <td><%= listing.location || '—' %></td>
+          <td><%= listing.price ? Number(listing.price).toLocaleString() + ' ETB' : t('negotiable') %></td>
+          <td><span class="status-pill status-<%= listing.status %>"><%= t('status_' + listing.status) %></span></td>
+          <td>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <a href="/admin/listings/<%= listing.id %>/edit" class="btn btn-outline btn-sm"><%= t('edit') %></a>
+              <form method="post" action="/admin/listings/<%= listing.id %>/toggle-status">
+                <button type="submit" class="btn btn-secondary btn-sm">
+                  <%= listing.status === 'available' ? t('mark_as_sold') : t('mark_as_available') %>
+                </button>
+              </form>
+              <form method="post" action="/admin/listings/<%= listing.id %>/delete" onsubmit="return confirm('<%= t('confirm_delete') %>')">
+                <button type="submit" class="btn btn-danger btn-sm"><%= t('delete') %></button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('../partials/admin-footer') %>

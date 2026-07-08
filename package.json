@@ -1,0 +1,25 @@
+{
+  "name": "mafithe-alle-hossana",
+  "version": "1.0.0",
+  "description": "Mafithe Alle Hossana - Local marketplace for Hossana, Ethiopia (cars, houses, land, weddings, sound, decoration, makeup)",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "multer": "^1.4.5-lts.1",
+    "uuid": "^9.0.1"
+  },
+  "license": "UNLICENSED",
+  "private": true
+}

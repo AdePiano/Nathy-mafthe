@@ -1,0 +1,53 @@
+<%- include('../partials/admin-header', { pageTitle: t('manage_bookings'), active: 'bookings' }) %>
+
+<h1 class="section-title"><%= t('manage_bookings') %></h1>
+
+<div class="table-wrap">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th><%= t('listing') %></th>
+        <th><%= t('customer_name') %></th>
+        <th><%= t('customer_phone') %></th>
+        <th><%= t('payment_method') %></th>
+        <th><%= t('transaction_ref') %></th>
+        <th><%= t('date_submitted') %></th>
+        <th><%= t('booking_status') %></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (bookings.length === 0) { %>
+        <tr><td colspan="8" class="empty-state">—</td></tr>
+      <% } %>
+      <% bookings.forEach(function(b) { %>
+        <tr>
+          <td><a href="/listing/<%= b.listingId %>" target="_blank"><%= b.listingTitleEn || b.listingTitleAm %></a></td>
+          <td><%= b.customerName %></td>
+          <td><a href="tel:<%= b.customerPhone %>"><%= b.customerPhone %></a></td>
+          <td><%= b.paymentMethod %></td>
+          <td><%= b.transactionRef || '—' %></td>
+          <td><%= new Date(b.createdAt).toLocaleString() %></td>
+          <td><span class="status-pill status-<%= b.status %>"><%= t('status_' + b.status) %></span></td>
+          <td>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <form method="post" action="/admin/bookings/<%= b.id %>/status">
+                <input type="hidden" name="status" value="confirmed">
+                <button type="submit" class="btn btn-secondary btn-sm"><%= t('confirm') %></button>
+              </form>
+              <form method="post" action="/admin/bookings/<%= b.id %>/status">
+                <input type="hidden" name="status" value="rejected">
+                <button type="submit" class="btn btn-outline btn-sm"><%= t('reject') %></button>
+              </form>
+              <form method="post" action="/admin/bookings/<%= b.id %>/delete" onsubmit="return confirm('<%= t('confirm_delete') %>')">
+                <button type="submit" class="btn btn-danger btn-sm"><%= t('delete') %></button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('../partials/admin-footer') %>

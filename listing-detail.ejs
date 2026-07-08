@@ -1,0 +1,85 @@
+<%- include('partials/header', { pageTitle: lang === 'am' ? listing.title_am : listing.title_en }) %>
+
+<section class="section">
+  <a href="/category/<%= listing.category %>" class="btn btn-outline btn-sm">&larr; <%= t('back_to_list') %></a>
+
+  <% if (submitted) { %>
+    <div class="alert alert-success" style="margin-top:16px;"><%= t('submit_success') %></div>
+  <% } %>
+
+  <div class="detail-grid" style="margin-top:16px;">
+    <div>
+      <div class="detail-gallery-main">
+        <% if (listing.images && listing.images.length > 0) { %>
+          <img id="mainImage" src="<%= listing.images[0] %>" alt="">
+        <% } %>
+      </div>
+      <% if (listing.images && listing.images.length > 1) { %>
+        <div class="detail-thumbs">
+          <% listing.images.forEach(function(img) { %>
+            <img src="<%= img %>" onclick="document.getElementById('mainImage').src=this.src">
+          <% }) %>
+        </div>
+      <% } %>
+
+      <div style="margin-top:20px;">
+        <h3><%= t('description') %></h3>
+        <p><%= lang === 'am' ? listing.description_am : listing.description_en %></p>
+      </div>
+    </div>
+
+    <div class="detail-panel">
+      <span class="badge badge-<%= listing.status %>" style="position:static; display:inline-block; margin-bottom:8px;"><%= t('status_' + listing.status) %></span>
+      <h1><%= lang === 'am' ? listing.title_am : listing.title_en %></h1>
+      <div class="price-box">
+        <% if (listing.price) { %>
+          <%= Number(listing.price).toLocaleString() %> ETB
+          <% if (category && category.type === 'rent') { %><small style="font-size:0.9rem; font-weight:500;"> / <%= t('per_day') %></small><% } %>
+        <% } else { %>
+          <%= t('negotiable') %>
+        <% } %>
+      </div>
+
+      <% if (listing.location) { %>
+        <div class="info-row"><span><%= t('location') %></span><span><%= listing.location %></span></div>
+      <% } %>
+      <% if (listing.areaSize) { %>
+        <div class="info-row"><span><%= t('area') %></span><span><%= listing.areaSize %> <%= listing.areaUnit === 'km2' ? 'km²' : 'm²' %></span></div>
+      <% } %>
+
+      <% if (listing.status === 'available') { %>
+        <form method="post" action="/listing/<%= listing.id %>/book" style="margin-top:16px;">
+          <div class="form-group">
+            <label><%= t('your_name') %></label>
+            <input type="text" name="customerName" required>
+          </div>
+          <div class="form-group">
+            <label><%= t('your_phone') %></label>
+            <input type="tel" name="customerPhone" required placeholder="09xx xxx xxx">
+          </div>
+          <div class="form-group">
+            <label><%= t('payment_method') %></label>
+            <select name="paymentMethod" required>
+              <option value="CBE">CBE (<%= CBE_ACCOUNT_NUMBER %>)</option>
+              <option value="Telebirr">Telebirr (<%= TELEBIRR_NUMBER %>)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label><%= t('transaction_ref') %></label>
+            <input type="text" name="transactionRef" placeholder="e.g. FT23190XXXXX">
+          </div>
+          <div class="form-group">
+            <label><%= t('notes') %></label>
+            <textarea name="notes"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block"><%= t('submit_request') %></button>
+        </form>
+        <a href="/how-to-pay" class="btn btn-outline btn-block" style="margin-top:8px;"><%= t('nav_how_to_pay') %></a>
+      <% } %>
+
+      <a href="tel:<%= CONTACT_PHONE %>" class="btn btn-secondary btn-block" style="margin-top:8px;">📞 <%= t('call_now') %>: <%= CONTACT_PHONE %></a>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

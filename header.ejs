@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="<%= lang %>" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof pageTitle !== 'undefined' ? pageTitle + ' | ' : '' %><%= t('site_name') %></title>
+  <meta name="description" content="<%= t('home_hero_subtitle') %>">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="tricolor-strip"></div>
+  <header class="site-header">
+    <div class="header-top">
+      <a href="/" class="brand">
+        <span class="brand-mark">መ</span>
+        <span>
+          <div class="brand-text-am"><%= t('site_name') %></div>
+        </span>
+      </a>
+
+      <form class="header-search" action="/category/car-rental" method="get">
+        <input type="text" name="q" placeholder="<%= t('search_placeholder') %>">
+        <button type="submit"><%= t('search_button') %></button>
+      </form>
+
+      <div class="header-actions">
+        <a href="/contact"><%= t('nav_contact') %></a>
+        <a href="/how-to-pay"><%= t('nav_how_to_pay') %></a>
+        <a href="/admin/dashboard"><%= t('nav_admin') %></a>
+        <a class="lang-switch" href="?lang=<%= otherLang %>"><%= otherLang === 'am' ? 'አማርኛ' : 'English' %></a>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <div class="header-nav-inner">
+        <a href="/"><%= t('nav_home') %></a>
+        <% categories.forEach(function(cat) { %>
+          <a href="/category/<%= cat.slug %>"><%= cat.icon %> <%= lang === 'am' ? cat.name.am : cat.name.en %></a>
+        <% }) %>
+      </div>
+    </nav>
+  </header>
